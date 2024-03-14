@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit User')
+@section('title', 'Pengguna')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,19 +16,19 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>User Form</h1>
+                <h1>Form Pengguna</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('user.index') }}">Users</a></div>
-                    <div class="breadcrumb-item">Edit User</div>
+                    <div class="breadcrumb-item"><a href="{{ route('user.index') }}">Pengguna</a></div>
+                    <div class="breadcrumb-item">Ubah Pengguna</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Edit User</h2>
+                <h2 class="section-title">Ubah Pengguna</h2>
 
                 <p class="section-lead">
-                    Modify in the form below and submit to update existing user
+                    Lakukan perubahan data pada form dibawah dan simpan untuk merubah akun pengguna
                 </p>
 
                 @if (session()->has('error'))
@@ -43,7 +43,7 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
-                                <label>Name</label>
+                                <label>Nama</label>
                                 <input type="text"
                                     class="form-control @error('name')
                                 is-invalid
@@ -89,11 +89,11 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Phone</label>
+                                <label>Telepon</label>
                                 <input type="text" class="form-control" name="phone" value="{{ $user->phone }}">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Roles</label>
+                                <label class="form-label">Level</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
                                         <input type="radio" name="role" value="admin" class="selectgroup-input"
@@ -108,32 +108,32 @@
                                     <label class="selectgroup-item">
                                         <input type="radio" name="role" value="doctor" class="selectgroup-input"
                                             @if ($user->role == 'doctor') checked @endif>
-                                        <span class="selectgroup-button">Doctor</span>
+                                        <span class="selectgroup-button">Dokter</span>
                                     </label>
                                     <label class="selectgroup-item">
                                         <input type="radio" name="role" value="guest" class="selectgroup-input"
                                             @if ($user->role == 'guest') checked @endif>
-                                        <span class="selectgroup-button">Guest</span>
+                                        <span class="selectgroup-button">Tamu</span>
                                     </label>
 
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Avatar</label>
+                                <label class="form-label">Foto</label>
                                 <div class="col-md-12 px-0">
                                     <div class="custom-file">
                                         <input type="file"
                                             name="avatar"
                                             class="custom-file-input">
-                                        <label class="custom-file-label">Choose File</label>
+                                        <label class="custom-file-label">Pilih berkas</label>
                                     </div>
-                                    <div class="form-text text-muted">The image must have a maximum size of 1MB
+                                    <div class="form-text text-muted">Maksimal ukuran gambar adalah 1MB
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>

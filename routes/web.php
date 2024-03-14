@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\ClinicProfileController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\SpecialistCodeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +29,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('home');
 
     Route::resource('user', UserController::class);
+    Route::resource('doctor', DoctorController::class);
+    Route::resource('specialistcode', SpecialistCodeController::class);
+    Route::resource('permission', PermissionController::class);
+    Route::resource('rolepermission', RolePermissionController::class);
+    Route::resource('clinicprofile', ClinicProfileController::class);
 });

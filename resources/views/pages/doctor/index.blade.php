@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pengguna')
+@section('title', 'Doctors')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,16 +11,16 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Pengguna</h1>
+                <h1>Dokter</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></div>
-                    <div class="breadcrumb-item">Pengguna</div>
+                    <div class="breadcrumb-item">Dokter</div>
                 </div>
             </div>
             <div class="section-body">
-                <h2 class="section-title">Pengguna</h2>
+                <h2 class="section-title">Dokter</h2>
                 <p class="section-lead">
-                    Anda dapat mengatur akun pengguna, seperti menambah, merubah dan menghapus.
+                    Anda dapat mengatur data dokter, seperti menambah, merubah dan menghapus.
                 </p>
 
                 @if (session('success'))
@@ -44,12 +44,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header flex justify-content-between">
-                                <h4>All Users</h4>
-                                <a href="{{ route('user.create') }}" class="btn btn-primary rounded-lg">Tambah Baru</a>
+                                <h4>Daftar Dokter</h4>
+                                <a href="{{ route('doctor.create') }}" class="btn btn-primary rounded-lg">Tambah Baru</a>
                             </div>
                             <div class="card-body">
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('user.index') }}">
+                                    <form method="GET" action="{{ route('doctor.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Cari" name="search">
                                             <div class="input-group-append">
@@ -68,39 +68,43 @@
                                             <th>Nama</th>
                                             <th>Email</th>
                                             <th>Telepon</th>
-                                            <th>Level</th>
-                                            <th>Dibuat pada</th>
+                                            <th>Alamat</th>
+                                            <th>Spesialis</th>
+                                            <th>Dibuat Pada</th>
                                             <th>&nbsp;</th>
                                         </tr>
-                                        @foreach ($users as $user)
+                                        @foreach ($doctors as $doctor)
                                             <tr>
                                                 <td>
                                                     <figure class="avatar mr-2">
-                                                        <img src="{{ $user->avatar ? asset('avatar').'/'. $user->avatar : asset('avatar/default.jpg') }}" alt="Profile Picture">
+                                                        <img src="{{ $doctor->user->avatar ? asset('avatar').'/'. $doctor->user->avatar : asset('avatar/default.jpg') }}" alt="Profile Picture">
                                                     </figure>
                                                 </td>
                                                 <td>
-                                                    {{ $user->name }}
+                                                    dr. {{ $doctor->name }}
                                                 </td>
                                                 <td>
-                                                    {{ $user->email }}
+                                                    {{ $doctor->user->email }}
                                                 </td>
                                                 <td>
-                                                    {{ $user->phone }}
+                                                    {{ $doctor->user->phone }}
                                                 </td>
                                                 <td>
-                                                    {{ $user->role }}
+                                                    {{ $doctor->address }}
                                                 </td>
-                                                <td>{{ $user->created_at }}</td>
+                                                <td>
+                                                    {{ $doctor->specialistCode->title }}
+                                                </td>
+                                                <td>{{ $doctor->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('user.edit', $user->id) }}'
+                                                        <a href='{{ route('doctor.edit', $doctor->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Ubah
                                                         </a>
 
-                                                        <form action="{{ route('user.destroy', $user->id) }}"
+                                                        <form action="{{ route('doctor.destroy', $doctor->id) }}"
                                                             method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
@@ -118,7 +122,7 @@
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $users->withQueryString()->links() }}
+                                    {{ $doctors->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

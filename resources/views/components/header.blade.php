@@ -245,7 +245,7 @@
                 <img alt="image"
                     src="{{ asset('avatar/'.auth()->user()->avatar) }}"
                     class="rounded-circle mr-1">
-                <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
+                <div class="d-sm-none d-lg-inline-block">Halo, {{ auth()->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">Logged in 5 min ago</div>

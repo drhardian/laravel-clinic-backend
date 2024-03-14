@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pengguna Baru')
+@section('title', 'Profil Klinik')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,19 +16,19 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Form Pengguna</h1>
+                <h1>Form Profil Klinik</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{route('user.index')}}">Pengguna</a></div>
-                    <div class="breadcrumb-item">Pengguna Baru</div>
+                    <div class="breadcrumb-item"><a href="{{route('clinicprofile.index')}}">Profil Klinik</a></div>
+                    <div class="breadcrumb-item">Profil Klinik Baru</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Pengguna Baru</h2>
+                <h2 class="section-title">Profil Klinik Baru</h2>
 
                 <p class="section-lead">
-                    Lengkapi form dibawah dan simpan untuk menambahkan pengguna baru.
+                    Lengkapi form dibawah dan simpan untuk menambahkan profil klinik baru.
                 </p>
 
                 @if ($errors->any())
@@ -42,7 +42,7 @@
                 @endif
 
                 <div class="card">
-                    <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('clinicprofile.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -59,6 +59,23 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label>Alamat</label>
+                                <input type="text"
+                                    class="form-control @error('address')
+                                is-invalid
+                            @enderror"
+                                    name="address" value="{{ old('address') }}">
+                                @error('address')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Telepon</label>
+                                <input type="number" class="form-control" name="phone">
+                            </div>
+                            <div class="form-group">
                                 <label>Email</label>
                                 <input type="email"
                                     class="form-control @error('email')
@@ -72,54 +89,39 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Password</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-lock"></i>
-                                        </div>
-                                    </div>
-                                    <input type="password"
-                                        class="form-control @error('password')
-                                is-invalid
-                            @enderror"
-                                        name="password">
-                                </div>
-                                @error('password')
+                                <label>Keterangan</label>
+                                <input type="text"
+                                    class="form-control @error('description')
+                                        is-invalid
+                                    @enderror"
+                                    name="description"
+                                    value="{{ old('description') }}">
+                                @error('description')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Telepon</label>
-                                <input type="number" class="form-control" name="phone">
+                                <label>Dokter</label>
+                                <select
+                                    class="form-control form-control-sm @error('doctor_id')
+                                        is-invalid
+                                    @enderror"
+                                    name="doctor_id">
+                                    <option value="" selected disabled>Pilih disini..</option>
+                                    @foreach ($doctors as $doctor)
+                                        <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('doctor_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Level</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="admin" class="selectgroup-input"
-                                            checked="">
-                                        <span class="selectgroup-button">Admin</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="staff" class="selectgroup-input">
-                                        <span class="selectgroup-button">Staff</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="doctor" class="selectgroup-input">
-                                        <span class="selectgroup-button">Dokter</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="role" value="guest" class="selectgroup-input">
-                                        <span class="selectgroup-button">Tamu</span>
-                                    </label>
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Foto</label>
+                                <label class="form-label">Logo</label>
                                 <div class="col-md-12 px-0">
                                     <div class="custom-file">
                                         <input type="file"
