@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ClinicProfileInterface;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 
 class PermissionController extends Controller
 {
+    private ClinicProfileInterface $clinicProfileRepository;
+
+    public function __construct(ClinicProfileInterface $clinicProfileRepository)
+    {
+        $this->clinicProfileRepository = $clinicProfileRepository;
+        View::share('clinicLogo', $this->clinicProfileRepository->getClinicLogo());
+    }
+
     /**
      * Display a listing of the resource.
      */

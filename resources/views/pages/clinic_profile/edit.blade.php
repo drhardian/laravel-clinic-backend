@@ -20,15 +20,15 @@
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="{{route('clinicprofile.index')}}">Profil Klinik</a></div>
-                    <div class="breadcrumb-item">Profil Klinik Baru</div>
+                    <div class="breadcrumb-item">Ubah Profil Klinik</div>
                 </div>
             </div>
 
             <div class="section-body">
-                <h2 class="section-title">Profil Klinik Baru</h2>
+                <h2 class="section-title">Ubah Profil Klinik</h2>
 
                 <p class="section-lead">
-                    Lengkapi form dibawah dan simpan untuk menambahkan profil klinik baru.
+                    Lakukan perubahan data pada form dibawah dan simpan untuk merubah profil klinik
                 </p>
 
                 @if ($errors->any())
@@ -42,9 +42,16 @@
                 @endif
 
                 <div class="card">
-                    <form action="{{ route('clinicprofile.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('clinicprofile.update', $clinicprofile->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="card-body">
+                            <div class="form-group">
+                                <label>Logo saat ini</label>
+                                <div class="avatar-item">
+                                    <img alt="image" src="{{ $clinicprofile->logo ? asset('profile_logo').'/'. $clinicprofile->logo : asset('avatar/default.jpg') }}" class="img-fluid" width="100px">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label>Nama</label>
                                 <input type="text"
@@ -52,7 +59,7 @@
                                 is-invalid
                             @enderror"
                                     name="name"
-                                    value="{{ old('name') }}">
+                                    value="{{ $clinicprofile->name }}">
                                 @error('name')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -65,7 +72,7 @@
                                     class="form-control @error('address')
                                         is-invalid
                                     @enderror"
-                                    name="address" value="{{ old('address') }}">
+                                    name="address" value="{{ $clinicprofile->address }}">
                                     @error('address')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -79,7 +86,7 @@
                                         is-invalid
                                     @enderror"
                                     name="phone"
-                                    value="{{ old('phone') }}">
+                                    value="{{ $clinicprofile->phone }}">
                                     @error('phone')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -93,7 +100,7 @@
                                         is-invalid
                                     @enderror"
                                     name="email"
-                                    value="{{ old('email') }}">
+                                    value="{{ $clinicprofile->email }}">
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -107,7 +114,7 @@
                                         is-invalid
                                     @enderror"
                                     name="description"
-                                    value="{{ old('description') }}">
+                                    value="{{ $clinicprofile->description }}">
                                     @error('description')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -123,7 +130,7 @@
                                     name="doctor_id">
                                     <option value="" selected disabled>Pilih disini..</option>
                                     @foreach ($doctors as $doctor)
-                                        <option value="{{ $doctor->id }}" @if ($doctor->id === old('doctor_id'))
+                                        <option value="{{ $doctor->id }}" @if ($doctor->id === $clinicprofile->doctor_id)
                                             selected
                                         @endif>{{ $doctor->name }}</option>
                                     @endforeach

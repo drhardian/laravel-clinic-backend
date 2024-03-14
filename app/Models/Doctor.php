@@ -14,7 +14,9 @@ class Doctor extends Model
         'specialist_code_id',
         'address',
         'sip_number',
-        'user_id'
+        'user_id',
+        'id_ihs',
+        'nik'
     ];
 
     /**

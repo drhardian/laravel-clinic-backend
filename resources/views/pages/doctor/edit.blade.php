@@ -19,7 +19,7 @@
                 <h1>Dokter Form</h1>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="{{ route('specialistcode.index') }}">Dokter</a></div>
+                    <div class="breadcrumb-item"><a href="{{ route('doctor.index') }}">Dokter</a></div>
                     <div class="breadcrumb-item">Ubah Dokter</div>
                 </div>
             </div>
@@ -104,6 +104,32 @@
                                     @endforeach
                                 </select>
                                 @error('user_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>ID IHS</label>
+                                <input type="text"
+                                    class="form-control @error('id_ihs')
+                                is-invalid
+                            @enderror"
+                                    name="id_ihs" value="{{ $doctor->id_ihs }}">
+                                @error('id_ihs')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>NIK</label>
+                                <input type="text"
+                                    class="form-control @error('nik')
+                                is-invalid
+                            @enderror"
+                                    name="nik" value="{{ $doctor->nik }}">
+                                @error('nik')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>

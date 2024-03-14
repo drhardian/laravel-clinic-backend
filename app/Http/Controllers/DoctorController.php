@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ClinicProfileInterface;
 use App\Models\Doctor;
 use App\Models\SpecialistCode;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\View;
 
 class DoctorController extends Controller
 {
+    private ClinicProfileInterface $clinicProfileRepository;
+
+    public function __construct(ClinicProfileInterface $clinicProfileRepository)
+    {
+        $this->clinicProfileRepository = $clinicProfileRepository;
+        View::share('clinicLogo', $this->clinicProfileRepository->getClinicLogo());
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -52,6 +62,8 @@ class DoctorController extends Controller
             'address' => 'required',
             'sip_number' => 'required',
             'user_id' => 'required|exists:users,id',
+            'id_ihs' => 'required',
+            'nik' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -63,16 +75,18 @@ class DoctorController extends Controller
                 'address',
                 'sip_number',
                 'user_id',
+                'id_ihs',
+                'nik'
             ]));
 
             DB::commit();
 
-            return redirect()->route('doctor.index')->with('success', 'Doctor created successfully');
+            return redirect()->route('doctor.index')->with('success', 'Data dokter berhasil dibuat');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
 
-            return redirect()->back()->withErrors('Failed to create doctor')->withInput();
+            return redirect()->back()->withErrors('Gagal ketika menambahkan data dokter')->withInput();
         }
     }
 
@@ -107,6 +121,8 @@ class DoctorController extends Controller
             'specialist_code_id' => 'required|exists:specialist_codes,id',
             'address' => 'required',
             'sip_number' => 'required',
+            'id_ihs' => 'required',
+            'nik' => 'required',
             'user_id' => 'required|exists:users,id',
         ]);
 
@@ -118,6 +134,8 @@ class DoctorController extends Controller
                 'specialist_code_id',
                 'address',
                 'sip_number',
+                'id_ihs',
+                'nik',
                 'user_id',
             ));
 

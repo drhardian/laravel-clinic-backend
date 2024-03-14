@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ClinicProfileInterface;
-use App\Models\RolePermission;
+use App\Models\Doctor;
+use App\Models\DoctorSchedule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
-class RolePermissionController extends Controller
+class DoctorScheduleController extends Controller
 {
     private ClinicProfileInterface $clinicProfileRepository;
 
@@ -23,17 +23,16 @@ class RolePermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $rolepermissions = DB::table('role_permissions')
-            ->join('permissions', 'role_permissions.permission_id', '=', 'permissions.id')
-            ->when($request->input('search'), function ($query, $search) {
-                return $query->where('role_permissions.role', 'like', '%' . $search . '%')->orWhere('permissions.title', 'like', '%' . $search . '%');
+        $doctorSchedules = DoctorSchedule::with('doctor')
+            ->when($request->input('doctor_id'), function ($query, $doctor_id) {
+                return $query->where('doctor_id', $doctor_id);
             })
-            ->orderBy('role_permissions.id','desc')
+            ->orderBy('id', 'desc')
             ->paginate(10);
 
-        $type_menu = 'rolepermission';
+        $type_menu = 'doctorschedule';
 
-        return view('pages.role_permission.index', compact('type_menu','rolepermissions'));
+        return view('pages.doctor_schedule.index', compact('type_menu', 'doctorSchedules'));
     }
 
     /**
@@ -41,9 +40,11 @@ class RolePermissionController extends Controller
      */
     public function create()
     {
-        $type_menu = "rolepermission";
+        $doctors = Doctor::select('id', 'name')->get();
 
-        return view('pages.role_permission.create', compact('type_menu'));
+        $type_menu = "doctorschedule";
+
+        return view('pages.doctor_schedule.create', compact('type_menu', 'doctors'));
     }
 
     /**
@@ -51,13 +52,13 @@ class RolePermissionController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(RolePermission $rolepermission)
+    public function show(DoctorSchedule $doctorschedule)
     {
         //
     }
@@ -65,7 +66,7 @@ class RolePermissionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RolePermission $rolepermission)
+    public function edit(DoctorSchedule $doctorschedule)
     {
         //
     }
@@ -73,7 +74,7 @@ class RolePermissionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RolePermission $rolepermission)
+    public function update(Request $request, DoctorSchedule $doctorschedule)
     {
         //
     }
@@ -81,7 +82,7 @@ class RolePermissionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RolePermission $rolepermission)
+    public function destroy(DoctorSchedule $doctorschedule)
     {
         //
     }

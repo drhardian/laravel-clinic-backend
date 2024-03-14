@@ -1,5 +1,8 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
+        <div class="mb-0 mt-2 text-center">
+            <img alt="image" src="{{ asset($clinicLogo) }}" class="img-fluid" width="100px">
+        </div>
         <div class="sidebar-brand">
             <a href="index.html">KLINIK FAHEEMA</a>
         </div>
@@ -13,7 +16,7 @@
                     class="nav-link"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Master</li>
-            <li class="nav-item dropdown {{ $type_menu === 'specialist_code' || $type_menu === 'doctor' ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ $type_menu === 'specialist_code' || $type_menu === 'doctor' || $type_menu === 'doctorschedule' ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-table"></i> <span>Master Data</span></a>
@@ -25,6 +28,10 @@
                     <li class="{{ Str::startsWith(request()->path(), 'doctor') ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ route('doctor.index') }}">Dokter</a>
+                    </li>
+                    <li class="{{ Str::startsWith(request()->path(), 'doctorschedule') ? 'active' : '' }}">
+                        <a class="nav-link"
+                            href="{{ route('doctorschedule.index') }}">Jadwal Dokter</a>
                     </li>
                 </ul>
             </li>
