@@ -16,7 +16,7 @@
                     class="nav-link"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
             </li>
             <li class="menu-header">Master</li>
-            <li class="nav-item dropdown {{ $type_menu === 'specialist_code' || $type_menu === 'doctor' || $type_menu === 'doctorschedule' ? 'active' : '' }}">
+            <li class="nav-item dropdown {{ $type_menu === 'specialist_code' || $type_menu === 'doctor' || $type_menu === 'doctorschedule' || $type_menu === 'patient' ? 'active' : '' }}">
                 <a href="#"
                     class="nav-link has-dropdown"
                     data-toggle="dropdown"><i class="fa-solid fa-table"></i> <span>Master Data</span></a>
@@ -29,9 +29,13 @@
                         <a class="nav-link"
                             href="{{ route('doctor.index') }}">Dokter</a>
                     </li>
-                    <li class="{{ Str::startsWith(request()->path(), 'doctorschedule') ? 'active' : '' }}">
+                    <li class="{{ Str::startsWith(request()->path(), 'scheduledoctor') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ route('doctorschedule.index') }}">Jadwal Dokter</a>
+                            href="{{ route('scheduledoctor.index') }}">Jadwal Dokter</a>
+                    </li>
+                    <li class="{{ Str::startsWith(request()->path(), 'patient') ? 'active' : '' }}">
+                        <a class="nav-link"
+                            href="{{ route('patient.index') }}">Pasien</a>
                     </li>
                 </ul>
             </li>

@@ -42,7 +42,7 @@
                 @endif
 
                 <div class="card">
-                    <form action="{{ route('permission.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('permission.store') }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
